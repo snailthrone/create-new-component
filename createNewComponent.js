@@ -7,11 +7,11 @@ const componentName = process.argv[2],
     : `${__dirname}/${componentName}`,
   templatePath = `${__dirname}/template`;
 
-function outputFileName (fileName) {
+function outputFileName(fileName) {
   return `${outputPath}/${fileName}`.replace('__COMPONENT__', componentName);
 }
 
-function copyTemplateFile (fileName) {
+function copyTemplateFile(fileName) {
   // Make new component folder if not exists
   if (!fs.existsSync(outputPath)) {
     fs.mkdirSync(outputPath);
@@ -30,7 +30,7 @@ function copyTemplateFile (fileName) {
   });
 }
 
-function injectFile (fileName) {
+function injectFile(fileName) {
   return new Promise((resolve) => {
     const file = fs.readFileSync(`${outputPath}/${fileName}`, 'utf8');
     fs.writeFileSync(
@@ -42,7 +42,7 @@ function injectFile (fileName) {
   });
 }
 
-function listFiles (folder) {
+function listFiles(folder) {
   return new Promise((resolve, reject) => {
     fs.readdir(folder, (error, files) => {
       if (error) {
@@ -53,7 +53,7 @@ function listFiles (folder) {
   });
 }
 
-function createComponent () {
+function createComponent() {
   listFiles(templatePath).then((files) => {
     const copyPromises = files.map(file => (
       copyTemplateFile(file).then(status => console.log(status))
